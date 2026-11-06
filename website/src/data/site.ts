@@ -8,8 +8,12 @@ export const CONTACT_EMAIL = "transmission@theshriks.space";
 export const SITE_DESCRIPTION =
   "Nayki is an open-source, Android-first navigation app that shows the evidence behind each route: lighting, nearby help, reported incidents and time of day. It never calls a place safe, and says so when it has no data.";
 
-export const NAV = [
+export const NAV_LEFT = [
   { href: "/how-it-works", label: "How it works" },
+  { href: "/motive", label: "Our motive" },
+];
+export const NAV_RIGHT = [
   { href: "/docs", label: "Docs" },
   { href: "/contribute", label: "Contribute" },
 ];
+export const NAV = [...NAV_LEFT, ...NAV_RIGHT];

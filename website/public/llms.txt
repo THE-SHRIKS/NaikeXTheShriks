@@ -5,6 +5,7 @@
 ## Pages
 
 - [Home](https://nayki.theshriks.space/): what Nayki is and where it stands.
+- [Our motive](https://nayki.theshriks.space/motive): why Nayki exists, what we believe and what we promise not to do.
 - [How it works](https://nayki.theshriks.space/how-it-works): the risk model, architecture, privacy rules and API endpoints.
 - [Docs](https://nayki.theshriks.space/docs): run the backend, run the tests, open the Android app, configuration and known limitations.
 - [Contribute](https://nayki.theshriks.space/contribute): who we need, good first jobs and how to join. Developers, designers, data people and safety teams are welcome.

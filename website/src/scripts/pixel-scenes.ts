@@ -66,13 +66,13 @@ const map: Scene = (u, v, t) => {
   const nearH = Math.abs(fract((v + 0.05) / 0.2) - 0.5) * 0.2 > 0.093;
   const avenue = segDist(u, v, -0.9, -0.42, 0.9, 0.34) < 0.008;
   let l = 0;
-  if (nearV || nearH) l = 0.42;
-  if (avenue) l = 0.45;
+  if (nearV || nearH) l = 0.26;
+  if (avenue) l = 0.3;
   // buildings
   if (!nearV && !nearH) {
     const bx = Math.floor((u + 0.06) / 0.25);
     const by = Math.floor((v + 0.05) / 0.2);
-    if (hash(bx * 13.1 + by * 7.7) > 0.45) l = 0.05;
+    if (hash(bx * 13.1 + by * 7.7) > 0.45) l = 0;
   }
   // soft patches: moderate and higher risk, drifting slowly
   const blobs: [number, number, number, number][] = [

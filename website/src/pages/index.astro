@@ -14,7 +14,6 @@ const sample = `{
 
 <Base title="Nayki">
   <section class="sec forest hero">
-    <p class="float" style="right:4%;top:36px">Android first.<br />Open source.</p>
     <div class="wrap hero__grid">
       <div data-reveal>
         <p class="eyebrow">Open source · In development</p>
@@ -28,7 +27,7 @@ const sample = `{
           <a class="btn btn--ghost" href={REPO} rel="noopener">View the source</a>
         </div>
       </div>
-      <PixelArt scene="map" label="Pixel map: a route across a street grid with rose patches marking higher-risk areas." tone="dark" ratio="5 / 4" cell={5} />
+      <PixelArt scene="map" label="Pixel map: a route across a street grid with rose patches marking higher-risk areas." tone="dark" ratio="5 / 4" cell={7} />
     </div>
   </section>
 
@@ -83,7 +82,7 @@ const sample = `{
         </p>
       </div>
       <div data-reveal>
-        <PixelArt scene="heat" label="A grid of areas at lower, moderate and higher risk, with hollow cells where the risk is unknown." tone="dark" ratio="1 / 1" cell={5} />
+        <PixelArt scene="heat" label="A grid of areas at lower, moderate and higher risk, with hollow cells where the risk is unknown." tone="dark" ratio="1 / 1" cell={7} />
       </div>
     </div>
   </section>
@@ -127,25 +126,8 @@ const sample = `{
     </div>
   </section>
 
-  <section class="sec">
-    <div class="wrap split">
-      <div data-reveal>
-        <p class="eyebrow">Two routes, one choice</p>
-        <h2>The shorter way is not always the one you want.</h2>
-        <p class="lede">
-          Nayki puts the options next to each other, with the reasons: poor lighting, an isolated road, help far away,
-          a recent report, the time of night. You decide which trade-off to take.
-        </p>
-      </div>
-      <div data-reveal>
-        <PixelArt scene="routes" label="Two routes from A to B: a shorter dashed one and a longer rose one." tone="light" ratio="5 / 4" cell={5} />
-      </div>
-    </div>
-  </section>
-
   <section class="sec forest">
-    <p class="float" style="left:4%;top:44px">Looking for<br />collaborators.</p>
-    <div class="wrap split split--flip">
+    <div class="wrap">
       <div data-reveal>
         <p class="eyebrow">Build it with us</p>
         <h2>Safety tools are better built by many hands.</h2>
@@ -155,11 +137,8 @@ const sample = `{
         </p>
         <div class="btns">
           <a class="btn" href="/contribute">See how to join</a>
-          <a class="btn btn--ghost" href={`${REPO}/issues/new`} rel="noopener">Open an issue</a>
+          <a class="btn btn--ghost" href="/motive">Why we are building it</a>
         </div>
-      </div>
-      <div data-reveal>
-        <PixelArt scene="network" label="People and places joined by links, with pulses travelling between them." tone="dark" ratio="5 / 4" cell={5} />
       </div>
     </div>
   </section>

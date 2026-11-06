@@ -92,19 +92,20 @@ button:focus-visible {
   border-bottom: 2px solid var(--forest-deep);
 }
 .hdr__bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  height: 68px;
+  height: 72px;
 }
 .logo {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-family: var(--display);
-  font-size: 26px;
-  letter-spacing: 0.08em;
+  font-size: 28px;
+  letter-spacing: 0.1em;
   text-decoration: none;
+  justify-self: center;
 }
 .logo i {
   width: 14px;
@@ -116,10 +117,19 @@ button:focus-visible {
 }
 .nav {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   align-items: center;
 }
-.nav a {
+.nav--l {
+  justify-self: end;
+  padding-right: 40px;
+}
+.nav--r {
+  justify-self: start;
+  padding-left: 40px;
+}
+.nav a,
+.mnav a {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.14em;
@@ -128,7 +138,8 @@ button:focus-visible {
   padding: 10px 12px;
 }
 .nav a:hover,
-.nav a[aria-current="page"] {
+.nav a[aria-current="page"],
+.mnav a:hover {
   background: var(--cream);
   color: var(--forest);
 }
@@ -140,6 +151,8 @@ button:focus-visible {
 }
 .menu {
   display: none;
+  grid-column: 3;
+  justify-self: end;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.14em;
@@ -151,31 +164,32 @@ button:focus-visible {
   min-height: 44px;
   cursor: pointer;
 }
-@media (max-width: 820px) {
+.mnav {
+  display: none;
+}
+@media (max-width: 960px) {
+  .nav {
+    display: none;
+  }
   .menu {
     display: inline-block;
   }
-  .nav {
-    display: none;
-    position: absolute;
-    inset: 68px 0 auto 0;
+  .logo {
+    grid-column: 2;
+  }
+  .hdr[data-open="true"] .mnav {
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
+    position: absolute;
+    inset: 72px 0 auto 0;
     background: var(--forest);
-    padding: 12px 24px 24px;
+    padding: 8px 24px 24px;
     border-bottom: 2px solid var(--forest-deep);
   }
-  .hdr[data-open="true"] .nav {
-    display: flex;
-  }
-  .nav a {
+  .mnav a {
     padding: 16px 4px;
     border-bottom: 1px solid var(--line);
     font-size: 14px;
-  }
-  .nav .nav__cta {
-    margin: 14px 0 0;
-    text-align: center;
   }
 }
 
@@ -217,12 +231,10 @@ h3 {
   letter-spacing: 0.01em;
 }
 h1 {
-  font-size: clamp(40px, 6.4vw, 84px);
-  text-transform: uppercase;
+  font-size: clamp(38px, 5.6vw, 72px);
 }
 h2 {
-  font-size: clamp(30px, 4.2vw, 54px);
-  text-transform: uppercase;
+  font-size: clamp(28px, 3.6vw, 46px);
 }
 h3 {
   font-size: 24px;
@@ -266,23 +278,21 @@ p {
   border: 2px solid var(--fg);
   background: var(--fg);
   color: var(--bg);
-  transition: transform 0.12s steps(2), box-shadow 0.12s steps(2);
-  box-shadow: 5px 5px 0 var(--rose);
+  transition: background 0.15s, color 0.15s;
 }
 .btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0 var(--rose);
+  background: var(--rose);
+  border-color: var(--rose);
+  color: var(--forest);
 }
 .btn--ghost {
   background: transparent;
   color: var(--fg);
-  box-shadow: none;
 }
 .btn--ghost:hover {
   background: var(--fg);
+  border-color: var(--fg);
   color: var(--bg);
-  box-shadow: none;
-  transform: none;
 }
 
 /* ───── hero ───── */
@@ -344,7 +354,7 @@ p {
 
 /* ───── seams ───── */
 .seam {
-  height: 168px;
+  height: 72px;
   margin: -1px 0;
   line-height: 0;
 }
@@ -356,7 +366,7 @@ p {
 }
 @media (max-width: 720px) {
   .seam {
-    height: 104px;
+    height: 48px;
   }
 }
 
@@ -511,7 +521,6 @@ pre {
   font-family: var(--mono);
   font-size: 14px;
   line-height: 1.65;
-  box-shadow: 6px 6px 0 var(--rose);
 }
 code {
   font-family: var(--mono);
@@ -593,8 +602,8 @@ code {
   padding: 72px 0 88px;
 }
 .phead h1 {
-  font-size: clamp(36px, 5.4vw, 70px);
-  max-width: 16ch;
+  font-size: clamp(34px, 5vw, 62px);
+  max-width: 18ch;
 }
 
 /* ───── footer ───── */
@@ -672,4 +681,15 @@ code {
   .wrap {
     width: min(1160px, 100% - 32px);
   }
+}
+
+.prose p {
+  font-size: 19px;
+}
+.pull {
+  font-family: var(--display);
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.2;
+  max-width: 24ch;
+  margin: 0;
 }

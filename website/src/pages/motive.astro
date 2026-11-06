@@ -1,0 +1,113 @@
+---
+import Base from "../layouts/Base.astro";
+import { REPO } from "../data/site";
+---
+
+<Base title="Our motive" description="Why Nayki exists: a route should come with its reasons. Our beliefs, what we will never do, and what done looks like for an open-source safety navigation project.">
+  <section class="sec forest phead">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">Our motive</p>
+      <h1>A route should come with its reasons.</h1>
+      <p class="lede">
+        Why we are building Nayki, what we believe, and what we promise not to do.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Why Nayki exists</p>
+        <p class="pull">Maps tell you the fastest way. They rarely tell you what it is like.</p>
+      </div>
+      <div class="prose" data-reveal>
+        <p>
+          Every day people choose how to get somewhere. They weigh the time against things a map does not show: whether
+          the road is lit, whether anyone is around, whether help is close, what has been reported nearby, what time
+          it is. They make those calls anyway, usually with less to go on than they need.
+        </p>
+        <p>
+          Nayki exists to put what is known, and what is not known, in front of the person who is choosing. It does not
+          make the decision for you. It shows the routes side by side with the reasons behind each one, so you can
+          decide with your eyes open.
+        </p>
+        <p>
+          We are building it in the open because a tool that talks about safety should be one anyone can read, check
+          and improve.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec blush">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">What we believe</p>
+        <h2>Four beliefs.</h2>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card">
+          <span class="num">01</span>
+          <h3>Evidence over reassurance</h3>
+          <p>A calm colour and the word "safe" feel kind, but they can be wrong. A level with its reasons and its confidence is more useful.</p>
+        </article>
+        <article class="card">
+          <span class="num">02</span>
+          <h3>Say when we do not know</h3>
+          <p>Gaps in the data are normal. Hiding them is the harm. Where there is no evidence, Nayki says "unavailable".</p>
+        </article>
+        <article class="card">
+          <span class="num">03</span>
+          <h3>Open, so it can be checked</h3>
+          <p>The rules that turn data into a risk level are in the source. Anyone can read them, question them and fix them.</p>
+        </article>
+        <article class="card">
+          <span class="num">04</span>
+          <h3>Know less about people</h3>
+          <p>Location is sensitive. We keep exact coordinates out of logs, group reports onto a grid, and support export and deletion.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Our promises</p>
+        <h2>What we will not do.</h2>
+      </div>
+      <ul class="bullets" data-reveal style="margin-top:0">
+        <li><b>We will not call a route or place safe.</b> Not in the app, the API or our writing.</li>
+        <li><b>We will not invent a score.</b> No data means no score.</li>
+        <li><b>We will not pass off sample data as real.</b> The app runs on sample data today, and we say so.</li>
+        <li><b>We will not replace emergency services.</b> Nayki is not one. In an emergency, call your local number.</li>
+        <li><b>We will not hide the status.</b> Prototype, simulated or real: we label which.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <div class="wrap">
+      <div class="split">
+        <div data-reveal>
+          <p class="eyebrow">Where we are</p>
+          <h2>Early, and honest about it.</h2>
+          <p class="lede">
+            Today there is an Android prototype and a backend in the same repository. They are not connected yet, and no
+            city has real data behind them.
+          </p>
+        </div>
+        <div class="prose" data-reveal>
+          <p><b>Done looks like this:</b> in at least one city, a person can open Nayki, compare routes, and see
+          real, sourced evidence for each, along with exactly how the level was worked out and where the gaps are.</p>
+          <p>Getting there takes people who build software and people who know how safety works on the ground. That is
+          why the project is open.</p>
+          <div class="btns">
+            <a class="btn" href="/contribute">Help build it</a>
+            <a class="btn btn--ghost" href={REPO} rel="noopener">Read the source</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,16 +1,24 @@
 ---
-import { NAV, REPO } from "../data/site";
+import { NAV, NAV_LEFT, NAV_RIGHT, REPO } from "../data/site";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const cur = (href: string) => (path === href ? "page" : undefined);
 ---
 
 <header class="hdr" data-hdr data-open="false">
   <div class="wrap hdr__bar">
+    <nav class="nav nav--l" aria-label="Primary">
+      {NAV_LEFT.map((i) => <a href={i.href} aria-current={cur(i.href)}>{i.label}</a>)}
+    </nav>
     <a class="logo" href="/" aria-label="Nayki home"><i aria-hidden="true"></i>NAYKI</a>
-    <button class="menu" type="button" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button>
-    <nav class="nav" id="site-nav" aria-label="Primary">
-      {NAV.map((item) => <a href={item.href} aria-current={path === item.href ? "page" : undefined}>{item.label}</a>)}
+    <nav class="nav nav--r" aria-label="More">
+      {NAV_RIGHT.map((i) => <a href={i.href} aria-current={cur(i.href)}>{i.label}</a>)}
       <a class="nav__cta" href={REPO} rel="noopener">GitHub</a>
     </nav>
+    <button class="menu" type="button" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
+  <nav class="mnav" id="site-nav" aria-label="Mobile">
+    {NAV.map((i) => <a href={i.href} aria-current={cur(i.href)}>{i.label}</a>)}
+    <a href={REPO} rel="noopener">GitHub</a>
+  </nav>
 </header>

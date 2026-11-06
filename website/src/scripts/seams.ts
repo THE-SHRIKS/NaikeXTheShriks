@@ -7,8 +7,8 @@ const COLORS: Record<string, [number, number, number]> = {
   cream: [255, 242, 242],
   blush: [255, 218, 218],
 };
-const CELL = 12;
-const FRAME_MS = 140;
+const CELL = 16;
+const FRAME_MS = 220;
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const hash = (n: number) => {
@@ -77,9 +77,9 @@ const paint = (s: Seam, time: number) => {
       const by = Math.floor(y / 2);
       const coarse = hash(bx * 7.1 + by * 13.7 + s.salt) > 0.5;
       const r = coarse ? hash(bx * 31.3 + by * 57.1 + s.salt * 3) : hash(x * 17.7 + y * 29.3 + s.salt * 5);
-      const lane = (hash(Math.floor(x / 9) * 3.3 + s.salt) - 0.5) * 0.2;
+      const lane = (hash(Math.floor(x / 9) * 3.3 + s.salt) - 0.5) * 0.1;
       const edge = clamp(t + lane + (p - 0.5) * 0.42) * 1.04;
-      const on = Math.abs(r - edge) < 0.075 ? hash(x * 3.7 + y * 9.1 + frame * 1.37 + s.salt) < 0.5 : r < edge;
+      const on = Math.abs(r - edge) < 0.04 ? hash(x * 3.7 + y * 9.1 + frame * 1.37 + s.salt) < 0.5 : r < edge;
       const c = on ? b : a;
       const i = (y * cols + x) * 4;
       image.data[i] = c[0];
