@@ -157,13 +157,23 @@ button:focus-visible {
   margin-left: auto;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
+  gap: 10px;
   height: 44px;
+  padding: 0 14px;
   color: var(--cream);
+  border: 2px solid var(--cream);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .gh:hover {
-  color: var(--rose);
+  background: var(--rose);
+  border-color: var(--rose);
+  color: var(--forest);
 }
 .nav a,
 .mnav a {
@@ -290,7 +300,9 @@ p {
 .hl {
   background: var(--rose);
   color: var(--forest);
-  padding: 0 0.15em;
+  padding: 0 0.14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 .forest .hl {
   color: var(--forest);
@@ -735,8 +747,8 @@ code {
   min-height: 100svh;
   margin-top: -72px;
   display: flex;
-  align-items: center;
-  padding: 168px 0 120px;
+  align-items: flex-end;
+  padding: 140px 0 72px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -746,24 +758,47 @@ code {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 60% 50%;
+  object-position: 50% 30%;
   z-index: -2;
 }
 .hero__scrim {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgb(0 0 0 / 72%) 0%, rgb(0 0 0 / 45%) 38%, rgb(0 0 0 / 0%) 72%);
+  background: linear-gradient(0deg, rgb(0 0 0 / 92%) 0%, rgb(0 0 0 / 70%) 30%, rgb(0 0 0 / 15%) 62%, rgb(0 0 0 / 35%) 100%);
 }
 .hero__copy {
   position: relative;
+  width: min(1160px, 100% - 48px);
 }
-.hero__copy > * {
-  max-width: 600px;
+.hero__top {
+  margin-bottom: 28px;
 }
-@media (max-width: 760px) {
-  .hero__scrim {
-    background: linear-gradient(180deg, rgb(0 0 0 / 55%), rgb(0 0 0 / 70%));
+.hero__row {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: end;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+.hero__row h1 {
+  font-size: clamp(40px, 5.6vw, 84px);
+  line-height: 1.12;
+  max-width: 15ch;
+}
+.hero__row .lede {
+  margin: 0;
+  font-size: clamp(17px, 1.6vw, 20px);
+  color: #f1e4e4;
+}
+.hero__row .btns {
+  margin-top: 24px;
+}
+@media (max-width: 860px) {
+  .hero__row {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
