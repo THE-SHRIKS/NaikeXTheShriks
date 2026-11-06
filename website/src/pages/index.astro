@@ -1,0 +1,166 @@
+---
+import Base from "../layouts/Base.astro";
+import PixelArt from "../components/PixelArt.astro";
+import { REPO } from "../data/site";
+
+const sample = `{
+  "coverage_status": "unavailable",
+  "confidence": "low",
+  "evidence_count": 0,
+  "safety_score": null,
+  "risk_level": "unknown"
+}`;
+---
+
+<Base title="Nayki">
+  <section class="sec forest hero">
+    <p class="float" style="right:4%;top:36px">Android first.<br />Open source.</p>
+    <div class="wrap hero__grid">
+      <div data-reveal>
+        <p class="eyebrow">Open source · In development</p>
+        <h1>Know what the <span class="hl">route</span> knows.</h1>
+        <p class="lede">
+          Nayki is an Android-first navigation app that shows the evidence behind each route: lighting, nearby help,
+          reported incidents and time of day. It never calls a place safe. When it has no data, it says so.
+        </p>
+        <div class="btns">
+          <a class="btn" href="/contribute">Help build it</a>
+          <a class="btn btn--ghost" href={REPO} rel="noopener">View the source</a>
+        </div>
+      </div>
+      <PixelArt scene="map" label="Pixel map: a route across a street grid with rose patches marking higher-risk areas." tone="dark" ratio="5 / 4" cell={5} />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">What it is</p>
+        <h2>A map that shows its homework.</h2>
+        <p class="lede">
+          Most maps give you one line and a time. Nayki is built to give you the line, the alternatives, and what is
+          known about each. You choose.
+        </p>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card">
+          <span class="num">01</span>
+          <h3>Compare routes</h3>
+          <p>Side-by-side routes with the reasons behind each risk level, not a single score you have to trust.</p>
+        </article>
+        <article class="card">
+          <span class="num">02</span>
+          <h3>See where help is</h3>
+          <p>A help layer for places that can assist: open venues, transport points and services near the route.</p>
+        </article>
+        <article class="card">
+          <span class="num">03</span>
+          <h3>Report what you saw</h3>
+          <p>Incident reports are kept and counted as unverified user reports until something stronger backs them.</p>
+        </article>
+        <article class="card">
+          <span class="num">04</span>
+          <h3>SOS in one tap</h3>
+          <p>An SOS flow designed around saved contacts and push notifications. It supports, and never replaces, calling emergency services.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <div class="wrap split split--flip">
+      <div data-reveal>
+        <p class="eyebrow">The rule</p>
+        <h2>It never says <span class="hl">safe</span>.</h2>
+        <p class="lede">
+          Nayki reports lower, moderate or higher risk, or unknown, with a confidence value and a count of the evidence
+          behind it. Where nothing is known, the answer is "unavailable", not an invented comfort.
+        </p>
+        <pre><code>{sample}</code></pre>
+        <p class="note" style="margin-top:28px">
+          This is the response the backend returns when it has no safety evidence for a place. It is the API's own rule,
+          written in the README.
+        </p>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="heat" label="A grid of areas at lower, moderate and higher risk, with hollow cells where the risk is unknown." tone="dark" ratio="1 / 1" cell={5} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec blush">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Where it stands</p>
+        <h2>Honest status.</h2>
+        <p class="lede">Some of this runs, some of it is a prototype, and some of it is still to be connected.</p>
+      </div>
+      <div class="tbl-wrap" data-reveal>
+        <table class="tbl">
+          <thead>
+            <tr><th>Part</th><th>Status</th><th>What that means</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Android app</td>
+              <td><span class="pill pill--rose">Prototype</span></td>
+              <td>Jetpack Compose screens for map, search, route comparison, heatmap, help layer, incidents, SOS and profile. They run on sample data.</td>
+            </tr>
+            <tr>
+              <td>Backend API</td>
+              <td><span class="pill pill--solid">In the repo</span></td>
+              <td>FastAPI with Postgres/PostGIS and Redis. Endpoints for auth, routes, places, incidents, safety, SOS and privacy, with tests.</td>
+            </tr>
+            <tr>
+              <td>App to API link</td>
+              <td><span class="pill">Not yet</span></td>
+              <td>The app does not call the backend yet. Connecting them is the first big job.</td>
+            </tr>
+            <tr>
+              <td>Real safety data</td>
+              <td><span class="pill">Not yet</span></td>
+              <td>Data sources are wired as integrations in code. No city has coverage today.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Two routes, one choice</p>
+        <h2>The shorter way is not always the one you want.</h2>
+        <p class="lede">
+          Nayki puts the options next to each other, with the reasons: poor lighting, an isolated road, help far away,
+          a recent report, the time of night. You decide which trade-off to take.
+        </p>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="routes" label="Two routes from A to B: a shorter dashed one and a longer rose one." tone="light" ratio="5 / 4" cell={5} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <p class="float" style="left:4%;top:44px">Looking for<br />collaborators.</p>
+    <div class="wrap split split--flip">
+      <div data-reveal>
+        <p class="eyebrow">Build it with us</p>
+        <h2>Safety tools are better built by many hands.</h2>
+        <p class="lede">
+          We need Android and backend developers, people who know open data, designers, accessibility reviewers, and
+          teams who work on safety in their city. If that is you, come and build this.
+        </p>
+        <div class="btns">
+          <a class="btn" href="/contribute">See how to join</a>
+          <a class="btn btn--ghost" href={`${REPO}/issues/new`} rel="noopener">Open an issue</a>
+        </div>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="network" label="People and places joined by links, with pulses travelling between them." tone="dark" ratio="5 / 4" cell={5} />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,33 @@
+---
+import { CONTACT_EMAIL, NAV, REPO, REPO_ISSUES } from "../data/site";
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="logo" href="/" aria-label="Nayki home"><i aria-hidden="true"></i>NAYKI</a>
+        <p style="margin-top:18px;color:#cfe0cf;max-width:36ch">Open-source safety navigation by THE SHRIKS. In development.</p>
+      </div>
+      <div>
+        <h2>Pages</h2>
+        <ul>
+          <li><a href="/">Home</a></li>
+          {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href={REPO} rel="noopener">Source on GitHub</a></li>
+          <li><a href={REPO_ISSUES} rel="noopener">Issues</a></li>
+          <li><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+        </ul>
+      </div>
+    </div>
+    <small>
+      Nayki is a work in progress. It does not claim any route or place is safe, it is not an emergency service, and it
+      must not replace calling local emergency numbers.
+    </small>
+  </div>
+</footer>

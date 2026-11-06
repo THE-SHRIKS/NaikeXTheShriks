@@ -1,0 +1,134 @@
+---
+import Base from "../layouts/Base.astro";
+import PixelArt from "../components/PixelArt.astro";
+import { CONTACT_EMAIL, REPO, REPO_ISSUES, REPO_NEW_ISSUE } from "../data/site";
+
+const roles = [
+  ["Android developers", "Kotlin and Jetpack Compose. Wire the app to the API, add maps, make SOS dependable."],
+  ["Backend developers", "FastAPI, PostGIS and H3. Harden the endpoints, add CI, improve the safety engine."],
+  ["Data and GIS people", "Open data, OpenStreetMap, government datasets. Help decide which sources are trustworthy and how to weigh them."],
+  ["Designers and accessibility", "Clear risk language, calm screens, screen-reader and low-vision support, flows that work under stress."],
+  ["Safety, civic and NGO teams", "People who work on women's, commuter or community safety. Tell us what is missing and what would be harmful."],
+  ["Privacy and security reviewers", "Review how location, reports and SOS data are handled, and break it before someone else does."],
+  ["Testers in real cities", "Walk the routes, check the help points, tell us where the data is wrong."],
+];
+
+const first = [
+  "Connect the Android app to the backend and replace the sample data.",
+  "Rename the Android package from com.example.nayki.",
+  "Add CI that runs the backend tests on every pull request.",
+  "Evaluate open data sources for one city and document their coverage.",
+  "Run an accessibility review of the existing screens.",
+  "Translate the app strings into a second language.",
+];
+---
+
+<Base title="Contribute" description="Nayki is looking for developers, designers, data people and safety teams to build open-source safety navigation together. See who we need, where to start, and the principles every contribution follows.">
+  <section class="sec forest hero">
+    <p class="float" style="right:4%;top:36px">Open call.<br />Devs and teams welcome.</p>
+    <div class="wrap hero__grid">
+      <div data-reveal>
+        <p class="eyebrow">Contribute</p>
+        <h1>Build this with <span class="hl">us</span>.</h1>
+        <p class="lede">
+          Nayki is an open-source project for safer, better-informed travel. The idea is solid and the foundations are
+          in the repository, but it needs more people than one team to become real. If you build software, run a safety
+          programme or know your city's streets, there is a place for you here.
+        </p>
+        <div class="btns">
+          <a class="btn" href={REPO_NEW_ISSUE} rel="noopener">Introduce yourself</a>
+          <a class="btn btn--ghost" href={REPO} rel="noopener">View the repository</a>
+        </div>
+      </div>
+      <PixelArt scene="network" label="People and places joined by links, with pulses travelling between them." tone="dark" ratio="5 / 4" cell={5} />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Who we need</p>
+        <h2>Seven kinds of help.</h2>
+      </div>
+      <div class="cards" data-reveal>
+        {roles.map(([name, body], i) => (
+          <article class="card">
+            <span class="num">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{name}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec blush">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Start here</p>
+        <h2>Good first jobs.</h2>
+        <p class="lede">These are real gaps in the repository today. Pick one, say so in an issue, and go.</p>
+      </div>
+      <ol class="steps" data-reveal style="margin-top:0">
+        {first.map((t) => <li><div><p style="color:var(--fg)">{t}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split split--flip">
+      <div data-reveal>
+        <p class="eyebrow">How to join</p>
+        <h2>Four steps.</h2>
+        <ol class="steps">
+          <li><div><b>Read the repository</b><p>Start with the README, then <code>nayki-backend/README.md</code> for the backend rules.</p></div></li>
+          <li><div><b>Open an issue</b><p>Tell us who you are, what you can do and what you want to pick up. Teams and organisations are welcome.</p></div></li>
+          <li><div><b>Fork and branch</b><p>Make your change on a branch in your fork. Keep it small and focused.</p></div></li>
+          <li><div><b>Open a pull request</b><p>Describe what changed and how you checked it. Backend changes should keep <code>make test</code> passing.</p></div></li>
+        </ol>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="sos" label="Rings pulsing outwards from a square button with a cross." tone="light" ratio="1 / 1" cell={5} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Principles</p>
+        <h2>Rules every contribution follows.</h2>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card"><span class="num">01</span><h3>Never claim "safe"</h3><p>No route, place or area is called safe or secure, in code, copy or marketing.</p></article>
+        <article class="card"><span class="num">02</span><h3>Say when we do not know</h3><p>No data means "unavailable", never an invented score.</p></article>
+        <article class="card"><span class="num">03</span><h3>Collect less</h3><p>Location is sensitive. Keep it out of logs, aggregate it, and delete what is not needed.</p></article>
+        <article class="card"><span class="num">04</span><h3>Label the status</h3><p>Prototype, simulated or real: documents and screens say which. No fake demos.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Teams and organisations</p>
+        <h2>Working together.</h2>
+        <p class="lede">
+          If your team wants to co-build, pilot Nayki in a city, contribute data, or review the design, write to us. Say
+          what you do, what you can offer and what you would need.
+        </p>
+      </div>
+      <div data-reveal>
+        <ul class="bullets">
+          <li>Public conversation: <a href={REPO_ISSUES} rel="noopener">GitHub issues</a>.</li>
+          <li>Direct contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</li>
+          <li>Nayki is not an emergency service. For urgent help, always call your local emergency number.</li>
+        </ul>
+        <div class="btns">
+          <a class="btn" href={REPO_NEW_ISSUE} rel="noopener">Open an issue</a>
+          <a class="btn btn--ghost" href={`mailto:${CONTACT_EMAIL}`}>Email the team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,131 @@
+---
+import Base from "../layouts/Base.astro";
+import PixelArt from "../components/PixelArt.astro";
+import { REPO_BACKEND } from "../data/site";
+
+const reasons = [
+  "poor_lighting",
+  "recent_incident",
+  "isolated_road",
+  "limited_data",
+  "help_far_away",
+  "night_time",
+  "government_data",
+  "user_reports_unverified",
+];
+---
+
+<Base title="How it works" description="How Nayki reports risk: four levels, a confidence value, an evidence count and a coverage status. Never a claim that a place is safe. Architecture, privacy rules and API endpoints.">
+  <section class="sec forest phead">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">How it works</p>
+      <h1>Evidence, not reassurance.</h1>
+      <p class="lede">
+        Nayki turns real-world signals into a risk level you can read, with the reasons beside it. This page explains
+        the rules the backend follows and the shape of the system.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">The risk model</p>
+        <h2>Four levels. No "safe".</h2>
+        <p class="lede">Every route and area gets one of these, plus the numbers that explain it.</p>
+        <ul class="levels">
+          <li style="--sw:var(--blush)"><b>lower_risk</b><span>The evidence points to fewer concerns. It is not a promise.</span></li>
+          <li style="--sw:var(--rose)"><b>moderate_risk</b><span>Some concerns show up in the evidence.</span></li>
+          <li style="--sw:var(--forest)"><b>higher_risk</b><span>Several concerns show up, or a strong one does.</span></li>
+          <li style="--sw:var(--cream)"><b>unknown</b><span>There is not enough evidence to say anything.</span></li>
+        </ul>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="heat" label="A grid of areas at different risk levels." tone="light" ratio="1 / 1" cell={5} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec blush">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Every answer carries its evidence</p>
+        <h2>Four numbers and a list of reasons.</h2>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card"><span class="num">01</span><h3>confidence</h3><p>From 0.0 to 1.0. How far to trust the level.</p></article>
+        <article class="card"><span class="num">02</span><h3>evidence_count</h3><p>How many records stand behind the answer.</p></article>
+        <article class="card"><span class="num">03</span><h3>coverage_status</h3><p><code>unavailable</code>, <code>limited</code>, <code>moderate</code> or <code>strong</code>.</p></article>
+        <article class="card"><span class="num">04</span><h3>risk_reasons</h3><p>The named reasons behind the level, from a fixed list.</p></article>
+      </div>
+      <ul class="chips" data-reveal aria-label="Risk reasons">
+        {reasons.map((r) => <li>{r}</li>)}
+      </ul>
+      <p class="note" data-reveal>
+        When no evidence exists, the backend must return <code>coverage_status: "unavailable"</code>, low confidence and
+        a null score. It must never invent a high-safety claim to fill the gap.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split split--flip">
+      <div data-reveal>
+        <p class="eyebrow">Architecture</p>
+        <h2>An app, an API, a spatial database.</h2>
+        <ol class="steps">
+          <li><div><b>Android app</b><p>Kotlin and Jetpack Compose. Search, compare routes, see help nearby, report, trigger SOS.</p></div></li>
+          <li><div><b>FastAPI service</b><p>Python 3.12, Pydantic v2, SQLAlchemy 2. Auth, routes, places, safety, incidents, SOS and privacy endpoints.</p></div></li>
+          <li><div><b>Postgres with PostGIS, and Redis</b><p>Spatial data on an H3 grid at resolution 9, with Redis for caching.</p></div></li>
+          <li><div><b>Outside sources</b><p>Clients for Google Places and Routes, GraphHopper, OpenStreetMap Overpass and Firebase push.</p></div></li>
+        </ol>
+      </div>
+      <div data-reveal>
+        <PixelArt scene="network" label="Nodes joined by links with pulses travelling between them." tone="light" ratio="5 / 4" cell={5} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Privacy rules in the code</p>
+        <h2>Built to know less about you.</h2>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card"><span class="num">01</span><h3>No coordinates in logs</h3><p>Exact latitude and longitude are stripped by log processors. Only H3 cells or general regions may be logged.</p></article>
+        <article class="card"><span class="num">02</span><h3>Hashed audit trail</h3><p>Client IP addresses are hashed with SHA-256 before they reach the audit table.</p></article>
+        <article class="card"><span class="num">03</span><h3>Aggregated nearby data</h3><p>Nearby incidents are grouped onto H3 cells, so people who report a hazard are not pinpointed.</p></article>
+        <article class="card"><span class="num">04</span><h3>Export and delete</h3><p>Endpoints for exporting your data and deleting your account, with device tokens revoked.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">API surface</p>
+        <h2>What the backend exposes.</h2>
+      </div>
+      <div class="tbl-wrap" data-reveal>
+        <table class="tbl">
+          <thead><tr><th>Area</th><th>Path</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Health</td><td><code>/health</code></td><td>Service status.</td></tr>
+            <tr><td>Auth</td><td><code>/auth</code></td><td>Sign-in with Firebase tokens. A mock bypass exists for local development only.</td></tr>
+            <tr><td>Profile</td><td><code>/me</code></td><td>Profile, emergency contacts and devices.</td></tr>
+            <tr><td>Places</td><td><code>/places/search</code>, <code>/places/help</code></td><td>Destination search and nearby help.</td></tr>
+            <tr><td>Routes</td><td><code>/routes</code></td><td>Evaluate and compare routes.</td></tr>
+            <tr><td>Safety</td><td><code>/safety</code></td><td>Risk analysis and aggregated nearby data.</td></tr>
+            <tr><td>Reports</td><td><code>/reports</code></td><td>Crowd-sourced incident reports.</td></tr>
+            <tr><td>SOS</td><td><code>/sos</code></td><td>Create, cancel, respond to and close alerts.</td></tr>
+            <tr><td>Privacy</td><td><code>/privacy</code></td><td>Data export and account deletion.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="btns" data-reveal>
+        <a class="btn btn--ghost" href={REPO_BACKEND} rel="noopener">Read the backend source</a>
+      </div>
+    </div>
+  </section>
+</Base>

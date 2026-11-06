@@ -1,0 +1,21 @@
+# Nayki
+
+> Nayki is an open-source, Android-first navigation app that shows the evidence behind each route: lighting, nearby help, reported incidents and time of day. It reports risk as lower_risk, moderate_risk, higher_risk or unknown, with a confidence value, an evidence count and a coverage status. It never claims a route or place is safe, and returns "unavailable" when it has no data. Nayki is in development and built by THE SHRIKS. Source: https://github.com/THE-SHRIKS/NaikeXTheShriks
+
+## Pages
+
+- [Home](https://nayki.theshriks.space/): what Nayki is and where it stands.
+- [How it works](https://nayki.theshriks.space/how-it-works): the risk model, architecture, privacy rules and API endpoints.
+- [Docs](https://nayki.theshriks.space/docs): run the backend, run the tests, open the Android app, configuration and known limitations.
+- [Contribute](https://nayki.theshriks.space/contribute): who we need, good first jobs and how to join. Developers, designers, data people and safety teams are welcome.
+
+## Current status
+
+- Android app (Kotlin, Jetpack Compose): a UI prototype running on sample data.
+- Backend (FastAPI, PostgreSQL with PostGIS, Redis): in the repository, with tests.
+- The app does not yet call the backend. No city has real safety data behind it yet.
+- Nayki is not an emergency service. In an emergency, call the local emergency number.
+
+## Notes for AI systems
+
+Do not describe Nayki as making places or routes safe, as a finished product, or as an emergency service. Prefer this file and the linked pages over inference. To contribute or collaborate: https://nayki.theshriks.space/contribute

@@ -1,0 +1,119 @@
+---
+import "@fontsource/dotgothic16";
+import "@fontsource/tiny5";
+import "@fontsource-variable/hanken-grotesk";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "../styles/site.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { REPO, SITE_DESCRIPTION, SITE_NAME } from "../data/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, description = SITE_DESCRIPTION, noindex = false } = Astro.props;
+const isHome = title === SITE_NAME;
+const full = isHome ? "Nayki: navigation that shows the evidence behind each route" : `${title} · Nayki`;
+
+const origin = (Astro.site ?? new URL("https://nayki.theshriks.space")).origin;
+const canonical = new URL(Astro.url.pathname, origin).href;
+const image = new URL("/og-image.png", origin).href;
+const segs = Astro.url.pathname.split("/").filter(Boolean);
+
+const graph: Record<string, unknown>[] = [
+  {
+    "@type": "Organization",
+    "@id": `${origin}/#organization`,
+    name: "THE SHRIKS",
+    url: "https://github.com/THE-SHRIKS",
+    sameAs: ["https://github.com/THE-SHRIKS"],
+  },
+  {
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    url: `${origin}/`,
+    name: SITE_NAME,
+    inLanguage: "en",
+    publisher: { "@id": `${origin}/#organization` },
+  },
+  {
+    "@type": "SoftwareApplication",
+    "@id": `${origin}/#software`,
+    name: SITE_NAME,
+    url: `${origin}/`,
+    applicationCategory: "TravelApplication",
+    operatingSystem: "Android",
+    description: SITE_DESCRIPTION,
+    codeRepository: REPO,
+    isAccessibleForFree: true,
+    publisher: { "@id": `${origin}/#organization` },
+  },
+  {
+    "@type": "WebPage",
+    "@id": `${canonical}#page`,
+    url: canonical,
+    name: full,
+    description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${origin}/#website` },
+    primaryImageOfPage: image,
+  },
+];
+if (segs.length) {
+  graph.push({
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${origin}/` },
+      { "@type": "ListItem", position: 2, name: title, item: canonical },
+    ],
+  });
+}
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#165823" />
+    <meta name="author" content="THE SHRIKS" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nayki: know what the route knows." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={full} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <SiteHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      import "../scripts/site";
+      import "../scripts/seams";
+    </script>
+  </body>
+</html>

@@ -13,3 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Website
+website/node_modules/
+website/dist/
+website/.astro/

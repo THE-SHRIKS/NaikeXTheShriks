@@ -1,0 +1,111 @@
+---
+import Base from "../layouts/Base.astro";
+import { REPO, REPO_APP, REPO_BACKEND } from "../data/site";
+
+const clone = `git clone ${REPO}.git
+cd NaikeXTheShriks`;
+const backend = `cd nayki-backend
+cp .env.example .env
+make dev            # or: docker compose up --build`;
+const native = `make db-up           # Postgres/PostGIS and Redis in Docker
+make migrate         # Alembic migrations
+uvicorn app.main:app --reload --port 8000`;
+const tests = `make test             # or: pytest`;
+---
+
+<Base title="Docs" description="Run Nayki locally: clone the repository, start the FastAPI backend with Docker, run the tests, and open the Android app in Android Studio. Includes configuration and known limitations.">
+  <section class="sec forest phead">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">Docs</p>
+      <h1>Run it yourself.</h1>
+      <p class="lede">Everything here comes from the repository README and files. If a step is wrong, open an issue.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Backend</p>
+        <h2>Start the API.</h2>
+        <p class="lede">You need Docker. The compose file starts Postgres with PostGIS, Redis and the FastAPI app together.</p>
+      </div>
+      <div data-reveal>
+        <pre><code>{clone}</code></pre>
+        <pre><code>{backend}</code></pre>
+        <p class="note">
+          Prefer running Python natively? Start only the databases in Docker, then run the server yourself.
+        </p>
+        <pre><code>{native}</code></pre>
+        <p style="margin-top:28px">
+          Once it is up, interactive API docs are at <code>http://localhost:8000/docs</code>, and the health check is at
+          <code>http://localhost:8000/health</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec blush">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Configuration</p>
+        <h2>Environment variables.</h2>
+        <p class="lede">Copy <code>.env.example</code> to <code>.env</code>. Never commit real keys.</p>
+      </div>
+      <div class="tbl-wrap" data-reveal>
+        <table class="tbl">
+          <thead><tr><th>Variable</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>APP_ENV</td><td><code>local</code> or <code>production</code>.</td></tr>
+            <tr><td>API_PORT</td><td>Port for the FastAPI server. Default 8000.</td></tr>
+            <tr><td>DATABASE_URL</td><td>Async Postgres URL with PostGIS.</td></tr>
+            <tr><td>SYNC_DATABASE_URL</td><td>Sync Postgres URL, used by Alembic migrations.</td></tr>
+            <tr><td>REDIS_URL</td><td>Redis connection string.</td></tr>
+            <tr><td>DEV_AUTH_ENABLED</td><td>Mock auth bypass. Local development only.</td></tr>
+            <tr><td>FIREBASE_PROJECT_ID, JWT_ISSUER</td><td>Firebase token validation.</td></tr>
+            <tr><td>H3_RESOLUTION</td><td>H3 grid resolution. Default 9.</td></tr>
+            <tr><td>LOG_LEVEL</td><td><code>info</code>, <code>debug</code> or <code>error</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="eyebrow">Tests</p>
+        <h2>Run the checks.</h2>
+        <p class="lede">The backend has an automated test suite covering the health check, auth rules, spatial boundaries and the safety engine.</p>
+        <pre><code>{tests}</code></pre>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Android app</p>
+        <h2>Open it in Android Studio.</h2>
+        <p class="lede">
+          The app is a Gradle project at the repository root. Open the folder in Android Studio, let Gradle sync, and
+          run the <code>app</code> module on an emulator or device.
+        </p>
+        <p class="note">The app runs on sample data today. It does not connect to the backend yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec forest">
+    <div class="wrap">
+      <div data-reveal>
+        <p class="eyebrow">Known limitations</p>
+        <h2>Read before you rely on it.</h2>
+      </div>
+      <ul class="bullets" data-reveal>
+        <li>The Android app and the backend are not connected. The app shows sample data.</li>
+        <li>No city has real safety data behind it. Risk levels will be <code>unknown</code> until data is added.</li>
+        <li>The Android package is still <code>com.example.nayki</code> and must be renamed before any release.</li>
+        <li>Nayki is not an emergency service. In an emergency, call your local emergency number.</li>
+      </ul>
+      <div class="btns" data-reveal>
+        <a class="btn" href={REPO_BACKEND} rel="noopener">Backend source</a>
+        <a class="btn btn--ghost" href={REPO_APP} rel="noopener">Android source</a>
+      </div>
+    </div>
+  </section>
+</Base>

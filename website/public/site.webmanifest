@@ -1,0 +1,10 @@
+{
+  "name": "Nayki",
+  "short_name": "Nayki",
+  "description": "Open-source safety navigation that shows the evidence behind each route.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fff2f2",
+  "theme_color": "#165823",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

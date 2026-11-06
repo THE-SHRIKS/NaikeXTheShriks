@@ -1,0 +1,38 @@
+---
+interface Props {
+  scene: string;
+  label: string;
+  tone?: "dark" | "light" | "blush";
+  ratio?: string;
+  cell?: number;
+}
+
+const { scene, label, tone = "dark", ratio = "5 / 4", cell = 5 } = Astro.props;
+---
+
+<canvas
+  class="pxart"
+  data-pxart={scene}
+  data-tone={tone}
+  data-cell={cell}
+  width="320"
+  height="256"
+  style={`aspect-ratio:${ratio}`}
+  role="img"
+  aria-label={label}></canvas>
+
+<script>
+  import { mount } from "../scripts/pixel";
+  import { SCENES } from "../scripts/pixel-scenes";
+
+  document.querySelectorAll<HTMLCanvasElement>("[data-pxart]").forEach((canvas) => {
+    const scene = SCENES[canvas.dataset.pxart ?? ""];
+    if (!scene) return;
+    const dark = canvas.dataset.tone === "dark";
+    mount(canvas, [scene], {
+      cell: Number(canvas.dataset.cell ?? 5),
+      ink: dark ? "#fff2f2" : "#165823",
+      accent: "#ff788d",
+    });
+  });
+</script>
