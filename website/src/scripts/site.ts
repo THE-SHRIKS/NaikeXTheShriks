@@ -16,6 +16,13 @@ if (header && toggle) {
   window.addEventListener("keydown", (e) => e.key === "Escape" && set(false));
 }
 
+// On the home page the header floats transparent over the film, and turns solid once you scroll.
+if (header && header.dataset.home === "true") {
+  const update = () => (header.dataset.top = window.scrollY < 8 ? "true" : "false");
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+}
+
 // Smooth scroll.
 if (!reduced) {
   const lenis = new Lenis({

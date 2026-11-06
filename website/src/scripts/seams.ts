@@ -3,6 +3,7 @@
 // edge flicker in whole frames, like a sprite sheet.
 
 const COLORS: Record<string, [number, number, number]> = {
+  black: [0, 0, 0],
   forest: [22, 88, 35],
   cream: [255, 242, 242],
   blush: [255, 218, 218],
@@ -33,7 +34,8 @@ interface Seam {
 const main = document.querySelector("main");
 const seams: Seam[] = [];
 
-const themeOf = (el: Element) => (el.classList.contains("forest") ? "forest" : el.classList.contains("blush") ? "blush" : "cream");
+const themeOf = (el: Element) =>
+  el.classList.contains("black") ? "black" : el.classList.contains("forest") ? "forest" : el.classList.contains("blush") ? "blush" : "cream";
 
 const make = (from: string, to: string, salt: number): HTMLElement => {
   const wrap = document.createElement("div");

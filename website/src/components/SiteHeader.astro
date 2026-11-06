@@ -5,7 +5,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const cur = (href: string) => (path === href ? "page" : undefined);
 ---
 
-<header class="hdr" data-hdr data-open="false">
+<header class="hdr" data-hdr data-open="false" data-home={path === "/" ? "true" : "false"} data-top="true">
   <div class="wrap hdr__bar">
     <nav class="nav nav--l" aria-label="Primary">
       {NAV_LEFT.map((i) => <a href={i.href} aria-current={cur(i.href)}>{i.label}</a>)}
