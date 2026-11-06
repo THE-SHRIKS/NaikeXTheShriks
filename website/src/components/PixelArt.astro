@@ -1,25 +1,52 @@
 ---
+interface Legend {
+  kind: "rose" | "ink" | "dim" | "hollow" | "dash";
+  text: string;
+}
 interface Props {
   scene: string;
   label: string;
   tone?: "dark" | "light" | "blush";
-  ratio?: string;
-  cell?: number;
+  fig?: string;
+  caption?: string;
+  legend?: Legend[];
 }
 
-const { scene, label, tone = "dark", ratio = "5 / 4", cell = 5 } = Astro.props;
+const { scene, label, tone = "dark", fig, caption, legend = [] } = Astro.props;
 ---
 
-<canvas
-  class="pxart"
-  data-pxart={scene}
-  data-tone={tone}
-  data-cell={cell}
-  width="320"
-  height="256"
-  style={`aspect-ratio:${ratio}`}
-  role="img"
-  aria-label={label}></canvas>
+<figure class="fig" data-tone={tone}>
+  <canvas
+    class="pxart"
+    data-pxart={scene}
+    data-tone={tone}
+    width="90"
+    height="60"
+    style="aspect-ratio:3 / 2"
+    role="img"
+    aria-label={label}></canvas>
+  {
+    (caption || legend.length > 0) && (
+      <figcaption>
+        {caption && (
+          <p>
+            {fig && <b>{fig}</b>} {caption}
+          </p>
+        )}
+        {legend.length > 0 && (
+          <ul class="legend">
+            {legend.map((l) => (
+              <li>
+                <i class={`sw sw--${l.kind}`} aria-hidden="true" />
+                {l.text}
+              </li>
+            ))}
+          </ul>
+        )}
+      </figcaption>
+    )
+  }
+</figure>
 
 <script>
   import { mount } from "../scripts/pixel";
@@ -29,8 +56,10 @@ const { scene, label, tone = "dark", ratio = "5 / 4", cell = 5 } = Astro.props;
     const scene = SCENES[canvas.dataset.pxart ?? ""];
     if (!scene) return;
     const dark = canvas.dataset.tone === "dark";
+    const width = canvas.getBoundingClientRect().width || 540;
     mount(canvas, [scene], {
-      cell: Number(canvas.dataset.cell ?? 5),
+      // About 90 cells across at any width, so the on-canvas labels keep the same proportions.
+      cell: Math.max(3, Math.round(width / 90)),
       ink: dark ? "#fff2f2" : "#165823",
       accent: "#ff788d",
     });

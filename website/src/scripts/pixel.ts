@@ -1,7 +1,14 @@
 // A small ordered-dither renderer. A scene is a function returning brightness for a point.
 // Values 0..1 draw in the ink colour. Values 2..3 draw in the accent colour (brightness minus 2).
 
-export type Scene = (x: number, y: number, t: number, a: number, h?: number) => number;
+/** Grid position of the pixel being drawn, in canvas cells. */
+export interface Grid {
+  cols: number;
+  rows: number;
+  x: number;
+  y: number;
+}
+export type Scene = (x: number, y: number, t: number, a: number, h: number, g: Grid) => number;
 export const ACC = 2;
 
 const bayer = (() => {
@@ -72,16 +79,19 @@ export function mount(canvas: HTMLCanvasElement, scenes: Scene[], opts: MountOpt
     const hEff = (rows * opts.cell) / 1000;
     const blend = Math.min(1, (time - blendStart) / 700);
     const data = image.data;
+    const g: Grid = { cols, rows, x: 0, y: 0 };
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
+        g.x = x;
+        g.y = y;
         const px = ((x + 0.5) / cols) * a;
         const py = (y + 0.5) / rows;
         const X = opts.raw ? ((x + 0.5) * opts.cell) / 1000 : a / 2 + (px - a / 2) / s;
         const Y = opts.raw ? ((y + 0.5) * opts.cell) / 1000 : 0.5 + (py - 0.5) / s;
         const th = (bayer[(y % 8) * 8 + (x % 8)] ?? 0) / 64;
         let v: number;
-        if (blend < 1 && th >= blend) v = scenes[previous]?.(X, Y, t, aEff, hEff) ?? 0;
-        else v = scenes[current]?.(X, Y, t, aEff, hEff) ?? 0;
+        if (blend < 1 && th >= blend) v = scenes[previous]?.(X, Y, t, aEff, hEff, g) ?? 0;
+        else v = scenes[current]?.(X, Y, t, aEff, hEff, g) ?? 0;
         const isAcc = v >= ACC;
         const l = isAcc ? v - ACC : v;
         const i = (y * cols + x) * 4;

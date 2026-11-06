@@ -41,7 +41,13 @@ const reasons = [
         </ul>
       </div>
       <div data-reveal>
-        <PixelArt scene="heat" label="A grid of areas at different risk levels." tone="light" ratio="1 / 1" cell={7} />
+        <PixelArt
+          scene="gauge"
+          tone="light"
+          label="Four bars for lighting, help, reports and data fill up, and a box below shows the resulting level and confidence, cycling through lower, moderate, higher and unknown."
+          fig="Fig. 3"
+          caption="How one route's level is built. Four signals fill the bars and the level and a confidence value follow. With no data at all the result is unknown, never safe. The values shown are examples, not real data."
+        />
       </div>
     </div>
   </section>

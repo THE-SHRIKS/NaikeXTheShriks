@@ -13,21 +13,32 @@ const sample = `{
 ---
 
 <Base title="Nayki">
-  <section class="sec forest hero">
-    <div class="wrap hero__grid">
-      <div data-reveal>
-        <p class="eyebrow">Open source · In development</p>
-        <h1>Know what the <span class="hl">route</span> knows.</h1>
-        <p class="lede">
-          Nayki is an Android-first navigation app that shows the evidence behind each route: lighting, nearby help,
-          reported incidents and time of day. It never calls a place safe. When it has no data, it says so.
-        </p>
-        <div class="btns">
-          <a class="btn" href="/contribute">Help build it</a>
-          <a class="btn btn--ghost" href={REPO} rel="noopener">View the source</a>
-        </div>
+  <section class="sec forest hero--video">
+    <video
+      class="hero__video"
+      data-hero-video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/timeline-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="/timeline.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__scrim"></div>
+    <div class="wrap hero__copy" data-reveal>
+      <p class="eyebrow">Open source · In development</p>
+      <h1>Know what the <span class="hl">route</span> knows.</h1>
+      <p class="lede">
+        Nayki is an Android-first navigation app that shows the evidence behind each route: lighting, nearby help,
+        reported incidents and time of day. It never calls a place safe. When it has no data, it says so.
+      </p>
+      <div class="btns">
+        <a class="btn" href="/contribute">Help build it</a>
+        <a class="btn btn--ghost" href={REPO} rel="noopener">View the source</a>
       </div>
-      <PixelArt scene="map" label="Pixel map: a route across a street grid with rose patches marking higher-risk areas." tone="dark" ratio="5 / 4" cell={7} />
     </div>
   </section>
 
@@ -40,6 +51,21 @@ const sample = `{
           Most maps give you one line and a time. Nayki is built to give you the line, the alternatives, and what is
           known about each. You choose.
         </p>
+      </div>
+      <div class="figwrap" data-reveal>
+        <PixelArt
+          scene="nightwalk"
+          tone="dark"
+          label="Pixel street map. A dashed fast route from A to B crosses a rose patch marked RISK. A longer rose route follows lit streets past a help point, with a walker marked YOU."
+          fig="Fig. 1"
+          caption="A walk from A to B, shown at night. The fast route (dashed) cuts through a dark junction that missing street lights and reports mark as higher risk. The lit route is longer, keeps to lit streets and passes a help point. Nayki lays both out so you choose."
+          legend={[
+            { kind: "rose", text: "Lit route, with you walking it" },
+            { kind: "dash", text: "Faster route" },
+            { kind: "rose", text: "Higher-risk patch (RISK)" },
+            { kind: "ink", text: "Help point (+) and street lights" },
+          ]}
+        />
       </div>
       <div class="cards" data-reveal>
         <article class="card">
@@ -82,7 +108,13 @@ const sample = `{
         </p>
       </div>
       <div data-reveal>
-        <PixelArt scene="heat" label="A grid of areas at lower, moderate and higher risk, with hollow cells where the risk is unknown." tone="dark" ratio="1 / 1" cell={7} />
+        <PixelArt
+          scene="heat"
+          tone="dark"
+          label="A grid of areas shaded as low, mid or high risk, with hollow cells marked NONE where there is no evidence."
+          fig="Fig. 2"
+          caption="A neighbourhood split into areas. Each area gets a level from its own evidence. Hollow cells have too little evidence to say anything, so they stay unknown instead of being called safe."
+        />
       </div>
     </div>
   </section>
